@@ -1,3 +1,6 @@
+// Michal Seror, 212329221, micalhabib@gmail.com
+// Adina Lev, 566021464, adinalev24@gmail.com
+
 import static java.lang.System.out;
 import static primitives.Util.isZero;
 
