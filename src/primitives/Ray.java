@@ -24,9 +24,8 @@ public class Ray {
      * @param dir The direction vector of the ray.
      */
     public Ray(Point p0, Vector dir) {
-        dir.normalize(); // make sure this is ok with LoD!!!
         this.p0 = p0;
-        this.dir = dir;
+        this.dir = dir.normalize();
     }
 
     /**

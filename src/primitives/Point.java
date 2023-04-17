@@ -99,6 +99,7 @@ public class Point {
      @return A new vector representing the result of subtracting the specified point from this point.
      */
     public Vector subtract(Point secondPoint) {
+        // throw illegal argument exception !!
         return new Vector(xyz.subtract(secondPoint.xyz));
     }
 }

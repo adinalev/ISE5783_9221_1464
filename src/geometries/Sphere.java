@@ -10,7 +10,7 @@ import primitives.Point;
 import primitives.Vector;
 
 public class Sphere extends RadialGeometry {
-    private Point center;
+    final Point center; // needs to be final because all our geometrics are immutable
 
     /**
      * Constructs a Sphere object with the specified radius and center point.
@@ -39,7 +39,7 @@ public class Sphere extends RadialGeometry {
      * @return the normal vector to the sphere at the specified point
      */
     public Vector getNormal(Point point) {
-        return null;
+        return point.subtract(center).normalize();
     }
 
     /**

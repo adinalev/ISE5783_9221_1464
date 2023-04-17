@@ -9,8 +9,8 @@ import primitives.Vector;
 import primitives.Point;
 
 public class Plane {
-    private Point q0; // point on the plane
-    private Vector normal; // normal vector to the plane
+    final protected Point q0; // point on the plane
+    final Vector normal; // normal vector to the plane
 
     /**
      * Constructs a plane from three points on the plane.
@@ -19,7 +19,12 @@ public class Plane {
      * @param p3 Third point on the plane.
      */
     public Plane(Point p1, Point p2, Point p3) {
-        normal = null; // will implement in a future stage
+        this.q0 = p1;
+        Vector U = p1.subtract(p2);     // AB
+        Vector V = p1.subtract(p3);     // AC
+        Vector N = U.crossProduct(V);   // AB X AC
+        //right hand rule
+        this.normal = N.normalize();
     }
 
     /**
@@ -31,7 +36,7 @@ public class Plane {
     public Plane(Point q0, Vector normal) {
         normal.normalize();
         this.q0 = q0;
-        this.normal = normal;
+        this.normal = normal.normalize();
     }
 
     /**
@@ -47,8 +52,11 @@ public class Plane {
      * @return The normal vector to the plane.
      */
     public Vector getNormal() {
-        return normal;
+        return this.normal;
     }
+
+    public Vector getNormal(Point point){ return this.normal; }
+        //!!! FIX THIS!!!
 
     /**
     * Returns a string representation of the plane in the format:

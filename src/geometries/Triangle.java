@@ -10,9 +10,11 @@ import primitives.Point;
 public class Triangle extends Polygon {
     /**
      * Constructs a Triangle object with the specified vertices.
-     * @param vertices the vertices of the triangle
+     * @param p1 vertex of the triangle
+     * @param p2 vertex of the triangle
+     * @param p3 vertex of the triangle
      */
-    public Triangle(Point... vertices) {
-        super(vertices);
+    public Triangle(Point p1, Point p2, Point p3) {
+        super(p1, p2, p3);
     }
 }

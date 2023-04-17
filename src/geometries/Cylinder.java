@@ -30,15 +30,4 @@ public class Cylinder extends Tube {
     public double getHeight() {
         return height;
     }
-    /**
-
-     Returns the normal vector to this cylinder at the specified point.
-     @param point The point on this cylinder at which to calculate the normal vector.
-     @return A vector representing the normal to this cylinder at the specified point.
-     */
-    @Override
-    public Vector getNormal(Point point) {
-    // The implementation of this method will be provided in the future.
-        return null;
-    }
 }

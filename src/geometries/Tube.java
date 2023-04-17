@@ -9,6 +9,10 @@ package geometries;
 import primitives.Ray;
 import primitives.Vector;
 import primitives.Point;
+import primitives.Util;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 public class Tube extends RadialGeometry {
     protected Ray axisRay;
@@ -40,7 +44,22 @@ public class Tube extends RadialGeometry {
      * @return the normal vector to the tube at the specified point
      */
     public Vector getNormal(Point point) {
-        return null;
+        //!!
+        Point P0 = axisRay.getP0();
+        Vector v = axisRay.getDir();
+        Vector P0_P = point.subtract(P0);
+        double t = alignZero(v.dotProduct(P0_P));
+        if(isZero(t)) {
+            return P0_P.normalize();
+        }
+        Point o = P0.add(v.scale(t));
+
+        if(point.equals(o)) {
+            throw new IllegalArgumentException("point cannot be on the tube axis");
+        }
+
+        Vector n = point.subtract(o).normalize();
+        return n;
     }
 
     /**
