@@ -7,6 +7,8 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/** Testing Planes
+ * @author Michal and Adina */
 class PlaneTests {
     @Test
     void testGetNormal() {

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/** Testing Points
+ * @author Michal and Adina */
 class PointTests {
 // he copied code into Shira's code - minute 53
     Point p = new Point(1,1,1);

@@ -6,6 +6,8 @@ import static primitives.Util.isZero;
 import org.junit.jupiter.api.Test;
 import primitives.Util;
 
+/** Testing Vectors
+ * @author Michal and Adina */
 class VectorTests {
     /**
      * Test method for {@link primitives.Vector#crossProduct(primitives.Vector)}.

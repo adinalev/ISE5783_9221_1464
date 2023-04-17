@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import primitives.Point;
 import primitives.Vector;
+
+/** Testing Spheres
+ * @author Michal and Adina */
 class SphereTests {
 
     @Test
