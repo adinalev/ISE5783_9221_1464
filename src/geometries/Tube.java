@@ -44,7 +44,6 @@ public class Tube extends RadialGeometry {
      * @return the normal vector to the tube at the specified point
      */
     public Vector getNormal(Point point) {
-        //!!
         Point P0 = axisRay.getP0();
         Vector v = axisRay.getDir();
         Vector P0_P = point.subtract(P0);

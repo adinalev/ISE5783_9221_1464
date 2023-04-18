@@ -2,6 +2,11 @@ package geometries;
 import primitives.Ray;
 import primitives.Vector;
 import primitives.Point;
+import primitives.Util;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
 
  The Cylinder class represents a 3D cylinder shape defined by its base radius, axis ray, and height.
@@ -31,4 +36,28 @@ public class Cylinder extends Tube {
         return height;
     }
 
+    @Override
+    //normal of cylinder
+    public Vector getNormal(Point point) {
+        Point p0 = axisRay.getP0();
+        Vector v = axisRay.getDir();
+
+        if (point.equals(p0))
+            return v;
+
+        // projection of P-p0 on the ray:
+        Vector u = point.subtract(p0);
+
+        // distance from p0 to the o who is in from of point
+        double t = alignZero(u.dotProduct(v));
+
+        // if the point is at a base
+        if (t == 0 || isZero(height - t))
+            return v;
+
+        //the other point on the axis facing the given point
+        Point o = p0.add(v.scale(t));
+
+        return point.subtract(o).normalize();
+    }
 }

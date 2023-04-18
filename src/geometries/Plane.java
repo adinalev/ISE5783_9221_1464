@@ -7,6 +7,7 @@
 package geometries;
 import primitives.Vector;
 import primitives.Point;
+import java.util.List;
 
 public class Plane {
     final protected Point q0; // point on the plane
@@ -56,7 +57,6 @@ public class Plane {
     }
 
     public Vector getNormal(Point point){ return this.normal; }
-        //!!! FIX THIS!!!
 
     /**
     * Returns a string representation of the plane in the format:
@@ -70,4 +70,9 @@ public class Plane {
                 ", normal=" + normal +
                 '}';
     }
+
+    // **need to figure out what it says
+    //public List<Double3> findIntersections(Ray ray) {
+
+    //}
 }

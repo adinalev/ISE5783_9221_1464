@@ -65,7 +65,6 @@ class PointTests {
         // ====== Boundary Value Tests ======
         // Subtracting the same point from itself
         assertThrows(IllegalArgumentException.class, () -> new Point(3,2,1).subtract(new Point(3,2,1)), "Having a point of (0,0,0) must throw an exception");
-        // !! ask about this!!
     }
     @Test
     void testSubtract2() {
