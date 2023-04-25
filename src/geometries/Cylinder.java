@@ -4,6 +4,8 @@ import primitives.Vector;
 import primitives.Point;
 import primitives.Util;
 
+import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -14,6 +16,10 @@ import static primitives.Util.isZero;
  @author Michal and Adina (with help of chatGPT)
  */
 public class Cylinder extends Tube {
+
+    /*
+    this is variable which represents the height of the cylinder
+     */
     private double height;
 
     /**

@@ -4,7 +4,10 @@
  @author Michal and Adina (with help of chatGPT)
  */
 package primitives;
+import primitives.Ray;
 import java.util.Objects;
+
+import static primitives.Util.alignZero;
 
 public class Ray {
     /**
@@ -76,6 +79,10 @@ public class Ray {
                 "p0=" + p0 +
                 ", dir=" + dir +
                 '}';
+    }
+
+    public Point getPoint(double t){
+        return p0.add(dir.scale(t));
     }
 
 }

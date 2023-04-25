@@ -7,11 +7,19 @@
 package geometries;
 import primitives.Vector;
 import primitives.Point;
+import primitives.Ray;
 import java.util.List;
+import static primitives.Util.*;
 
-public class Plane {
-    final protected Point q0; // point on the plane
-    final Vector normal; // normal vector to the plane
+public class Plane implements Intersectable{
+    /*
+    * point on the plane
+     */
+    final protected Point q0;
+    /*
+    * normal vector to the plane
+     */
+    final Vector normal;
 
     /**
      * Constructs a plane from three points on the plane.
@@ -71,8 +79,57 @@ public class Plane {
                 '}';
     }
 
-    // **need to figure out what it says
-    //public List<Double3> findIntersections(Ray ray) {
+    /**
 
-    //}
+     Computes the intersection point(s) between a given ray and the plane.
+
+     @param ray the ray to intersect with the plane
+
+     @return a list containing the intersection point(s), or {@code null} if there are no intersection points
+     */
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        Point P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        // The plane's normal vector
+        Vector n = normal;
+
+        // Check if the ray starts on the plane
+        if(q0.equals(P0)) {
+            return null;
+        }
+
+        // Vector from P0 to Q0
+        Vector P0_Q0 = q0.subtract(P0);
+
+        // Numerator
+        double nP0Q0 = alignZero(n.dotProduct(P0_Q0));
+
+        // Check if the ray is parallel to the plane
+        if(isZero(nP0Q0)){
+            return null;
+        }
+
+        // Denominator
+        double nv = alignZero(n.dotProduct(v));
+
+        // Check if the ray is coplanar to the plane
+        if(isZero(nv)){
+            return null;
+        }
+
+        // Compute the intersection parameter
+        double t = alignZero(nP0Q0 / nv);
+
+            // Check if the intersection point is behind the ray's starting point
+        if (t <= 0){
+            return null;
+        }
+
+        // Compute the intersection point and return it in a list
+        Point point = ray.getPoint(t);
+        return List.of(point);
+    }
 }
+

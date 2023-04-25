@@ -11,6 +11,8 @@ import primitives.Vector;
 import primitives.Point;
 import primitives.Util;
 
+import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
@@ -72,5 +74,10 @@ public class Tube extends RadialGeometry {
                 super.toString().substring(15,super.toString().lastIndexOf("}")) +
                 "axisRay=" + axisRay +
                 '}';
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null;
     }
 }

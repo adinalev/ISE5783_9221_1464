@@ -7,11 +7,18 @@
  */
 package geometries;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
-public class Sphere extends RadialGeometry {
-    final Point center; // needs to be final because all our geometrics are immutable
+import java.util.List;
 
+import static primitives.Util.alignZero;
+
+public class Sphere extends RadialGeometry {
+    /*
+     * this is the center of the sphere
+     */
+    final Point center;
     /**
      * Constructs a Sphere object with the specified radius and center point.
      *
@@ -53,5 +60,57 @@ public class Sphere extends RadialGeometry {
                 super.toString().substring(15,super.toString().lastIndexOf("}")) +
                 "center=" + center +
                 '}';
+    }
+    /**
+
+     Returns a list of intersection points between a given ray and the sphere.
+
+     @param ray the ray to find intersections with
+
+     @return a list of intersection points between the ray and the sphere. Returns null if there are no intersections.
+     */
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        // Get the origin and direction of the ray
+        Point P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        // If the origin of the ray is equal to the center of the sphere, return the point on the sphere in the direction of the ray
+        if (P0.equals(center)) {
+            return List.of(center.add(v.scale(radius)));
+        }
+
+        // Calculate the distance from the origin of the ray to the center of the sphere
+        Vector U = center.subtract(P0);
+        double tm = alignZero(v.dotProduct(U));
+        double d = alignZero(Math.sqrt(U.lengthSquared() - tm * tm));
+
+        // If the distance is greater than or equal to the radius of the sphere, the ray does not intersect the sphere
+        if (d >= radius) {
+            return null;
+        }
+
+        // Calculate the distances from the origin of the ray to the intersection points with the sphere
+        double th = alignZero(Math.sqrt(radius * radius - d * d));
+        double t1 = alignZero(tm - th);
+        double t2 = alignZero(tm + th);
+
+        // If both distances are positive, return the points of intersection
+        if (t1 > 0 && t2 > 0) {
+            Point P1 = ray.getPoint(t1);
+            Point P2 = ray.getPoint(t2);
+            return List.of(P1,P2);
+        }
+        // If only one distance is positive, return the point of intersection
+        if (t1 > 0) {
+            Point P1 = ray.getPoint(t1);
+            return List.of(P1);
+        }
+        if (t2 > 0) {
+            Point P2 = ray.getPoint(t2);
+            return List.of(P2);
+        }
+        // If both distances are non-positive, the ray does not intersect the sphere
+        return null;
     }
 }

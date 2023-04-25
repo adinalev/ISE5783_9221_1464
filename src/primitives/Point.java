@@ -7,6 +7,9 @@ import java.util.Objects;
  * @author Michal and Adina (with help of chatGPT)
  */
 public class Point {
+    /*
+    xyz is a variable of type Double3 which contains three coordinates for the point
+     */
     final Double3 xyz;
 
     /**
@@ -102,4 +105,9 @@ public class Point {
         // throw illegal argument exception !!
         return new Vector(xyz.subtract(secondPoint.xyz));
     }
+
+    public double getXyzd1() {
+        return xyz.d1;
+    }
+    public double getXyzd2() { return xyz.d2; }
 }

@@ -7,7 +7,7 @@ import primitives.Point;
  The Geometry interface represents a geometric shape in 3D space.
  * @author Michal and Adina (with help of chatGPT)
  */
-public interface Geometry {
+public interface Geometry extends Intersectable {
 
     /**
 

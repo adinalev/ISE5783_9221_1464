@@ -11,7 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import geometries.Polygon;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /** Testing Polygons
  * @author Dan */
@@ -82,5 +85,43 @@ public class PolygonTests {
       for (int i = 0; i < 3; ++i)
          assertTrue(isZero(result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1]))),
                     "Polygon's normal is not orthogonal to one of the edges");
+   }
+   /**
+
+    Test case for the {@link Polygon#findIntersections(Ray)} method.
+    */
+   @Test
+   void testFindIntersections() {
+      Polygon polygon = new Polygon(
+              new Point(1, 0, 0),
+              new Point(0, 1, 0),
+              new Point(-2, 0, 0),
+              new Point(0,-1,0)
+      );
+      List<Point> result;
+
+      // ====== Equivalence Partitions Tests ======
+
+      //TC1: Ray is outside the polygon, and against the vertex
+      assertEquals(null, polygon.findIntersections(new Ray(new Point(0, -2, 0), new Vector(0, 0, 4))), "TC2 in Polygon EP failed.");
+
+      //TC2: Ray is outside the polygon, and against the edge
+      assertEquals(null, polygon.findIntersections(new Ray(new Point(-1, -1, 0), new Vector(0, 0, 3))), "TC3 in Polygon EP failed.");
+
+      //TC3: Ray inside the polygon
+      assertEquals(null,polygon.findIntersections(new Ray(new Point(0, 0, 0), new Vector(-1, 0, 0))), "TC4 in Polygon EP failed.");
+
+      // ====== Boundary Values Tests ======
+
+      //TC1: Ray is on the edge of the polygon
+      result = polygon.findIntersections(new Ray(new Point(-2, 0, 3), new Vector(1.03d, 0.51d, -3)));
+      assertEquals(1, result.size(), "There is supposed to be 1 intersection point");
+      assertEquals(new Point(-0.97d, 0.51d, 0d), result.get(0), "TC1 in Polygon BVA failed.");
+
+      ///TC2: Ray in vertex
+      assertEquals(null, polygon.findIntersections(new Ray(new Point(0, 1, 0), new Vector(-2d, -1d, 3))),  "TC2 in Polygon BVA failed.");
+
+      //TC3: Ray is found on the continuation of the edge.
+      assertEquals(null, polygon.findIntersections(new Ray(new Point(-1, 2, 0), new Vector(-1d, -2d, 3))), "TC3 in Polygon BVA failed.");
    }
 }

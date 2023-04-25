@@ -2,8 +2,9 @@ package geometries;
 
 import geometries.Geometry;
 
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import primitives.Point;
@@ -92,5 +93,54 @@ public class Polygon implements Geometry {
     @Override
     public Vector getNormal(Point point) {
         return plane.getNormal();
+    }
+
+    /**
+
+     Returns a list of intersection points between a given ray and a polygon.
+
+     @param ray the ray to find intersections with
+
+     @return a list of intersection points between the ray and the polygon. Returns null if there are no intersections.
+     */
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        // Get the origin and direction of the ray
+        Point p0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Vector v1;
+        Vector v2;
+        Vector n;
+        double t;
+
+        // Check if the plane of the polygon has intersection points
+        if (plane.findIntersections(ray) == null)
+            // If it doesn't, then that means the polygon for sure does not have intersection points
+            return null;
+
+        // Only create a list once we know there are intersection points
+        List<Point> planeIntersections = plane.findIntersections(ray);
+
+        // Check the bounds of the polygon
+        for (int i = 0; i < vertices.size(); i++) {
+            if (i == vertices.size() - 1) {
+                v1 = vertices.get(i).subtract(p0);
+                v2 = vertices.get(0).subtract(p0);
+                n = v1.crossProduct(v2).normalize();
+                t = alignZero(n.dotProduct(v));
+            } else {
+                v1 = vertices.get(i).subtract(p0);
+                v2 = vertices.get(i + 1).subtract(p0);
+                n = v1.crossProduct(v2).normalize();
+                t = alignZero(n.dotProduct(v));
+            }
+            if (t == 0)
+                // If t is zero, the ray is parallel to the plane of the polygon and does not intersect it
+                return null;
+        }
+
+        // If the point lies within the bounds of the polygon, return the list containing the intersection point
+        return planeIntersections;
     }
 }
