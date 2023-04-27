@@ -18,12 +18,12 @@ import java.util.List;
  @Author Michal and Adina (with the help of chatgpt)
  */
 public class Geometries implements Intersectable {
-
     /**
 
      A list of intersectable geometries.
      */
     private List<Intersectable> intersectables = null;
+
     /**
 
      Constructs an empty collection of geometries.
@@ -65,6 +65,7 @@ public class Geometries implements Intersectable {
             if (smallList != null) {
                 if (list == null)
                     list = new LinkedList<>();
+                // intersectables.add(inter);
                 list.addAll(smallList);
             }
         }

@@ -92,44 +92,37 @@ public class Plane implements Intersectable{
         Point P0 = ray.getP0();
         Vector v = ray.getDir();
 
-        // The plane's normal vector
         Vector n = normal;
 
-        // Check if the ray starts on the plane
         if(q0.equals(P0)) {
             return null;
         }
-
-        // Vector from P0 to Q0
         Vector P0_Q0 = q0.subtract(P0);
 
-        // Numerator
+        // numerator
         double nP0Q0 = alignZero(n.dotProduct(P0_Q0));
 
-        // Check if the ray is parallel to the plane
         if(isZero(nP0Q0)){
             return null;
         }
 
-        // Denominator
+        //denominator
         double nv = alignZero(n.dotProduct(v));
 
-        // Check if the ray is coplanar to the plane
+        // if ray is lying in the plane axis
         if(isZero(nv)){
             return null;
         }
 
-        // Compute the intersection parameter
         double t = alignZero(nP0Q0 / nv);
 
-            // Check if the intersection point is behind the ray's starting point
         if (t <= 0){
             return null;
         }
 
-        // Compute the intersection point and return it in a list
         Point point = ray.getPoint(t);
         return List.of(point);
+
     }
 }
 

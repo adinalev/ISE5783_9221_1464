@@ -31,7 +31,7 @@ public class GeometriesTests {
         Geometries geom = new Geometries();
         assertEquals(null, geom.findIntersections(ray), "TC1 failed.");
 
-        // TC2 : no geometric body is interesected
+        // TC2 : no geometric body is intersected
         Sphere sphere = new Sphere(1d, new Point(0,0,1));
         Plane plane = new Plane(new Point(-3,1,0), new Point(-4.18, 7, 0), new Point(-5.67, 5.27, 0));
         Triangle triangle = new Triangle(new Point(0,0,1), new Point(-2, 7, 0), new Point(-1.38, 2.45, 0));
@@ -48,11 +48,14 @@ public class GeometriesTests {
         assertEquals(2, result.size(), "TC1 failed.");
 
         // TC4 : All the geometric bodies were intersected
-        Geometries geom4 = new Geometries(sphere, plane);
+        plane = new Plane(new Point(0, 3, -7), new Point(1, 3, 3), new Point(2, 3, 4));
+        sphere = new Sphere(2, new Point(0, 0, 2));
+        ray = new Ray(new Point(0, -5, 2), new Vector(0, 1, 0));
+        Geometries geom4 = new Geometries(plane, sphere);
         result = geom4.findIntersections(ray);
-        if (result.get(0).getXyzd2() < result.get(2).getXyzd2())
-            result = List.of(result.get(2), result.get(1), result.get(0));
-        assertEquals(List.of(new Point(0, 3, 2), new Point(0, 2, 2), new Point(0, -2, 2)), result, "TC4 failed.");
+        if (result.get(1).getXyzd2() < result.get(2).getXyzd2())
+            result = List.of(result.get(0), result.get(2), result.get(1));
+        assertEquals(List.of(new Point(0, 3, 2), new Point(0, 2, 2), new Point(0, -2, 2)), result, "TC5 failed.");
 
         // ====== Boundary Value Analysis ======
 
