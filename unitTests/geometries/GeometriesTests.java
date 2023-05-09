@@ -53,7 +53,7 @@ public class GeometriesTests {
         ray = new Ray(new Point(0, -5, 2), new Vector(0, 1, 0));
         Geometries geom4 = new Geometries(plane, sphere);
         result = geom4.findIntersections(ray);
-        if (result.get(1).getXyzd2() < result.get(2).getXyzd2())
+        if (result.get(1).getY() < result.get(2).getY())
             result = List.of(result.get(0), result.get(2), result.get(1));
         assertEquals(List.of(new Point(0, 3, 2), new Point(0, 2, 2), new Point(0, -2, 2)), result, "TC5 failed.");
 
@@ -66,7 +66,7 @@ public class GeometriesTests {
         ray = new Ray(new Point(0, -5, 2), new Vector(0, 1, 0));
         Geometries geom3 = new Geometries(plane, sphere, sphere2);
         result = geom3.findIntersections(ray);
-        if (result.get(1).getXyzd2() < result.get(2).getXyzd2())
+        if (result.get(1).getY() < result.get(2).getY())
             result = List.of(result.get(0), result.get(2), result.get(1));
         assertEquals(List.of(new Point(0, 3, 2), new Point(0, 2, 2), new Point(0, -2, 2)), result, "TC5 failed.");
     }

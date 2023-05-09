@@ -8,6 +8,7 @@ import primitives.Ray;
 import java.util.Objects;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 public class Ray {
     /**
@@ -53,11 +54,18 @@ public class Ray {
      * @param o The object to compare with.
      * @return true if the objects are equal, false otherwise.
      */
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Ray ray)) return false;
         return Objects.equals(p0, ray.p0) && Objects.equals(dir, ray.dir);
+    }*/
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ray ray = (Ray) o;
+        return p0.equals(ray.p0) && dir.equals(ray.dir);
     }
 
     /**
@@ -82,6 +90,9 @@ public class Ray {
     }
 
     public Point getPoint(double t){
+        if (isZero(t)) {
+            return p0;
+        }
         return p0.add(dir.scale(t));
     }
 

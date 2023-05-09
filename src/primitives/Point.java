@@ -20,7 +20,7 @@ public class Point {
      * @param z the z coordinate of the point
      */
     public Point(double x, double y, double z) {
-        xyz = new Double3(x, y, z);
+        this.xyz = new Double3(x, y, z);
     }
 
     /**
@@ -38,10 +38,17 @@ public class Point {
      * @param o the reference object with which to compare
      * @return true if this object is the same as the obj argument; false otherwise.
      */
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Point point)) return false;
+        return xyz.equals(point.xyz);
+    }*/
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
         return xyz.equals(point.xyz);
     }
 
@@ -106,8 +113,9 @@ public class Point {
         return new Vector(xyz.subtract(secondPoint.xyz));
     }
 
-    public double getXyzd1() {
+    public double getX() {
         return xyz.d1;
     }
-    public double getXyzd2() { return xyz.d2; }
+    public double getY() { return xyz.d2; }
+    public double getZ() { return xyz.d3; }
 }

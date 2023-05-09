@@ -39,13 +39,23 @@ public class Double3 {
       this.d3 = value;
    }
 
-   @Override
+   /*@Override
    public boolean equals(Object obj) {
       if (this == obj) return true;
       if (obj instanceof Double3 other)
          return isZero(d1 - other.d1)
                && isZero(d2 - other.d2)
                && isZero(d3 - other.d3);
+      return false;
+   }*/
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj)
+         return true;
+      if (obj == null)
+         return false;
+      if (obj instanceof Double3 other)
+         return isZero(d1 - other.d1) && isZero(d2 - other.d2) && isZero(d3 - other.d3);
       return false;
    }
 

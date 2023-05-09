@@ -1,9 +1,10 @@
 /**
-
+/*
  The Vector class represents a three-dimensional vector with an x, y, and z component.
  It extends the Point class and inherits its methods and properties.
  @author Michal and Adina (with help of chatGPT)
  */
+
 package primitives;
 public class Vector extends Point {
 
@@ -27,8 +28,11 @@ public class Vector extends Point {
      *
      * @param double3 the Double3 object representing the vector's components
      */
-    Vector(Double3 double3) {
+    public Vector(Double3 double3) {
         this(double3.d1, double3.d2, double3.d3);
+        if (this.xyz.equals(Double3.ZERO)) {
+            throw new IllegalArgumentException("Vector cannot be ZERO");
+        }
     }
 
     /**
@@ -91,7 +95,8 @@ public class Vector extends Point {
      @return The scaled vector.
      */
     public Vector scale(double num) {
-        return new Vector(xyz.scale(num));
+      //  return new Vector(xyz.scale(num));
+        return new Vector(xyz.d1 * num, xyz.d2 * num,xyz.d3 * num);
     }
 
     /**
@@ -110,9 +115,19 @@ public class Vector extends Point {
      @return The cross product of this vector and the specified vector.
      */
     public Vector crossProduct(Vector vector) {
-        return new Vector(this.xyz.d2 * vector.xyz.d3 - this.xyz.d3 * vector.xyz.d2,
+        return new Vector(
+                this.xyz.d2 * vector.xyz.d3 - this.xyz.d3 * vector.xyz.d2,
                 this.xyz.d3 * vector.xyz.d1 - this.xyz.d1 * vector.xyz.d3,
                 this.xyz.d1 * vector.xyz.d2 - this.xyz.d2 * vector.xyz.d1);
+    }
+
+    /**
+     * Computes the subtraction of one vector from another.
+     * @param vector The vector to subtract from the vector that calls the function
+     * @return the vector formed by the subtraction of the original vector by the vector called
+     */
+    public Vector subtract(Vector vector) {
+        return new Vector(xyz.subtract(vector.xyz));
     }
 
     @Override
