@@ -7,6 +7,7 @@ import java.util.Objects;
  * @author Michal and Adina (with help of chatGPT)
  */
 public class Point {
+    public static final Point ZERO = new Point(Double3.ZERO);
     /*
     xyz is a variable of type Double3 which contains three coordinates for the point
      */

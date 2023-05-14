@@ -1,7 +1,10 @@
 package renderer;
+import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
+import java.util.MissingResourceException;
 
 import static primitives.Util.isZero;
 
@@ -26,8 +29,9 @@ public class Camera {
     private double width; // The width of the view plane
     private double height; // The height of the view plane
     private double distance; // The distance from the camera to the view plane
-//    private Vector direction; // The direction of the camera's view
 
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracerBase;
     /**
 
      Constructs a new Camera object with the given location, vUp, and vTo vectors.
@@ -135,5 +139,109 @@ public class Camera {
 
          return ray;
      }
+
+    /**
+     * setter method to set the ImageWriter object
+     * @param imagerWriter
+     * @return Camera object in order to allow chaining for the Builder pattern
+     */
+     public Camera setImageWriter(ImageWriter imagerWriter) {
+         this.imageWriter = imagerWriter;
+         return this;
+     }
+
+    /**
+     * setter method for the RayTracerBase object
+     * @param rayTracerBase
+     * @return Camera object in order to allow chaining for the Builder pattern
+     */
+     public Camera setRayTracerBase(RayTracerBase rayTracerBase) {
+         this.rayTracerBase = rayTracerBase;
+         return this;
+     }
+
+    /**
+     * Calculate and set the color of each pixel.
+     * @return the rendered image
+     */
+    public void renderImage() {
+         // check if any of the fields are null
+         if (p0 == null || vUp == null || vTo == null || vRight == null || width == 0 || height == 0 || distance == 0) {
+             throw new MissingResourceException("Missing resources.", Camera.class.getName(), "");
+         }
+         // check if the ImageWriter field is null
+         if (imageWriter == null) {
+             throw new MissingResourceException("ImageWriter object cannot be null.", ImageWriter.class.getName(), "");
+         }
+        // check if the RayTracerBase field is null
+        if (rayTracerBase == null) {
+             throw new MissingResourceException("RayTracerBase object cannot be null.", RayTracerBase.class.getName(), "");
+         }
+
+         // set the columns and the rows
+         int nX = imageWriter.getNx();
+         int nY = imageWriter.getNy();
+
+         // traverse through the rows and columms
+         for (int row = 0; row < nX; row++) {
+             for (int column = 0; column < nY; column++) {
+                // construct a ray for each pixel
+                Ray ray = this.constructRay(nX, nY, column, row);
+                // calculate the color
+                Color color = this.rayTracerBase.traceRay(ray);
+                // store the color in the corresponding pixel
+                this.imageWriter.writePixel(column, row, color);
+             }
+         }
+     }
+
+    /**
+     * Prints the grid over the scene
+     * @param interval the amount of space which encapsulates the pixels
+     * @param color the color of the  pixel
+     */
+     public void printGrid(int interval, Color color) {
+         // check if the imageWriter field is null
+         if (imageWriter == null) {
+             throw new MissingResourceException("ImageWriter field cannot be null!", ImageWriter.class.getName(), "");
+         }
+
+         // set the rows and the columns
+         int nX = imageWriter.getNx();
+         int nY = imageWriter.getNy();
+
+         // traverse through the columns and rows
+         for (int column = 0; column < nX; column++) {
+             for (int row = 0; row < nY; row++) {
+                 // if we are found on the grid, insert the color given
+                 if (column % interval == 0 || row % interval == 0) {
+                     imageWriter.writePixel(column, row, color);
+                 }
+             }
+         }
+
+         imageWriter.writeToImage();
+     }
+
+    /**
+     * Writes the image
+     */
+    public void writeToImage() {
+         if (imageWriter == null) {
+             throw new MissingResourceException("ImageWriter field cannot be null!", Camera.class.getName(), "");
+         }
+         // delegates the appropriate method of the ImageWriter.
+         imageWriter.writeToImage();
+     }
+
+    /**
+     * set the rayTracerBase object
+     * @param rayTracer
+     * @return the Camera object
+     */
+    public Camera setRayTracer(RayTracerBase rayTracer) {
+        this.rayTracerBase = rayTracer;
+        return this;
+    }
 }
 
