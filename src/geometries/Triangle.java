@@ -25,12 +25,16 @@ public class Triangle extends Polygon {
 
     /**
 
-     Finds intersection points between the ray and the triangle.
-     @param ray the ray to check for intersection with the triangle
-     @return a list containing the intersection point(s) between the ray and the triangle, or null if there is no intersection
+     Finds the intersections between the triangle and a given ray.
+
+     Overrides the method in the Geometry class.
+
+     @param ray The ray to intersect with the triangle.
+
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -52,15 +56,32 @@ public class Triangle extends Polygon {
         if (v.dotProduct(n1) > 0 && v.dotProduct(n2) > 0 && v.dotProduct(n3) > 0) {
             Plane plane = new Plane(p1, p2, p3);
             List<Point> list = plane.findIntersections(ray);
-            return list;
+            return List.of(new GeoPoint(this, list.get(0)));
         }
         if (v.dotProduct(n1) < 0 && v.dotProduct(n2) < 0 && v.dotProduct(n3) < 0) {
             Plane plane = new Plane(p1, p2, p3);
             List<Point> list = plane.findIntersections(ray);
-            return list;
+            return List.of(new GeoPoint(this, list.get(0)));
         }
         else
             // if there is no intersection, return null
             return null;
+    }
+
+    /**
+
+     Helper method for finding the intersections between the triangle and a given ray.
+     Overrides the method in the Geometry class.
+     @param ray The ray to intersect with the triangle.
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
+     */
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<Point> intersections = this.findIntersections(ray);
+        if (intersections == null) {
+            return null;
+        }
+        Point point = intersections.get(0);
+        return List.of(new GeoPoint(this, point));
     }
 }

@@ -6,7 +6,7 @@
  * @author Michal and Adina (with help of chatGPT)
  */
 package geometries;
-public abstract class RadialGeometry implements Geometry {
+public abstract class RadialGeometry extends Geometry {
     final protected double radius;
 
     /**

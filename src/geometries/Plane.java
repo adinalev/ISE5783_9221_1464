@@ -11,7 +11,7 @@ import primitives.Ray;
 import java.util.List;
 import static primitives.Util.*;
 
-public class Plane implements Intersectable{
+public class Plane extends Geometry { // CHANGED THIS FROM INTERSECTABLE
     /*
     * point on the plane
      */
@@ -81,14 +81,16 @@ public class Plane implements Intersectable{
 
     /**
 
-     Computes the intersection point(s) between a given ray and the plane.
+     Finds the intersections between the plane and a given ray.
 
-     @param ray the ray to intersect with the plane
+     Overrides the method in the Geometry class.
 
-     @return a list containing the intersection point(s), or {@code null} if there are no intersection points
+     @param ray The ray to intersect with the plane.
+
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         Point P0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -121,8 +123,25 @@ public class Plane implements Intersectable{
         }
 
         Point point = ray.getPoint(t);
-        return List.of(point);
+        GeoPoint geoPoint = new GeoPoint(this, point);
+        return List.of(geoPoint);
+    }
 
+    /**
+
+     Helper method for finding the intersections between the plane and a given ray.
+     Overrides the method in the Geometry class.
+     @param ray The ray to intersect with the plane.
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
+     */
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<Point> intersections = this.findIntersections(ray);
+        if (intersections == null) {
+            return null;
+        }
+        Point point = intersections.get(0);
+        return List.of(new GeoPoint(this, point));
     }
 }
 

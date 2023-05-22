@@ -3,6 +3,7 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import renderer.ImageWriter;
 
 import java.util.MissingResourceException;
 
@@ -164,7 +165,7 @@ public class Camera {
      * Calculate and set the color of each pixel.
      * @return the rendered image
      */
-    public void renderImage() {
+    public Camera renderImage() {
          // check if any of the fields are null
          if (p0 == null || vUp == null || vTo == null || vRight == null || width == 0 || height == 0 || distance == 0) {
              throw new MissingResourceException("Missing resources.", Camera.class.getName(), "");
@@ -193,6 +194,7 @@ public class Camera {
                 this.imageWriter.writePixel(column, row, color);
              }
          }
+         return this;
      }
 
     /**
@@ -226,12 +228,13 @@ public class Camera {
     /**
      * Writes the image
      */
-    public void writeToImage() {
+    public Camera writeToImage() {
          if (imageWriter == null) {
              throw new MissingResourceException("ImageWriter field cannot be null!", Camera.class.getName(), "");
          }
          // delegates the appropriate method of the ImageWriter.
          imageWriter.writeToImage();
+         return this;
      }
 
     /**
@@ -243,5 +246,7 @@ public class Camera {
         this.rayTracerBase = rayTracer;
         return this;
     }
+
+
 }
 

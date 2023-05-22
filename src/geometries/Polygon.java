@@ -17,7 +17,7 @@ import primitives.Ray;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -97,14 +97,16 @@ public class Polygon implements Geometry {
 
     /**
 
-     Returns a list of intersection points between a given ray and a polygon.
+     Finds the intersections between the polygon and a given ray.
 
-     @param ray the ray to find intersections with
+     Overrides the method in the Geometry class.
 
-     @return a list of intersection points between the ray and the polygon. Returns null if there are no intersections.
+     @param ray The ray to intersect with the polygon.
+
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         // Get the origin and direction of the ray
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
@@ -141,6 +143,23 @@ public class Polygon implements Geometry {
         }
 
         // If the point lies within the bounds of the polygon, return the list containing the intersection point
-        return planeIntersections;
+        return List.of(new GeoPoint(this, planeIntersections.get(0)));
+    }
+
+    /**
+
+     Helper method for finding the intersections between the polygon and a given ray.
+     Overrides the method in the Geometry class.
+     @param ray The ray to intersect with the polygon.
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
+     */
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<Point> intersections = this.findIntersections(ray);
+        if (intersections == null) {
+            return null;
+        }
+        Point point = intersections.get(0);
+        return List.of(new GeoPoint(this, point));
     }
 }

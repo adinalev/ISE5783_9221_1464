@@ -17,7 +17,7 @@ import java.util.List;
 
  @Author Michal and Adina (with the help of chatgpt)
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     /**
 
      A list of intersectable geometries.
@@ -48,20 +48,25 @@ public class Geometries implements Intersectable {
     public void add(Intersectable... geometries) {
         Collections.addAll(intersectables, geometries);
     }
+
     /**
 
-     Finds the intersection points between the given ray and the collection of geometries.
-     If no intersection points are found, returns null.
-     @param ray The ray to intersect with the collection of geometries.
-     @return A list of intersection points between the given ray and the collection of geometries, or null if no intersection points are found.
+     Finds the intersections between the plane and a given ray.
+
+     Overrides the method in the Geometry class.
+
+     @param ray The ray to intersect with the plane.
+
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
      */
-    public List<Point> findIntersections(Ray ray) {
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         if (intersectables.isEmpty()) {
             return null;
         }
-        List<Point> list = null;
+        List<GeoPoint> list = null;
         for(Intersectable inter : intersectables) {
-            List<Point> smallList = inter.findIntersections(ray);
+            List<GeoPoint> smallList = inter.findGeoIntersections(ray);
             if (smallList != null) {
                 if (list == null)
                     list = new LinkedList<>();
@@ -72,5 +77,25 @@ public class Geometries implements Intersectable {
         if(list != null)
             return list;
         else return null;
+    }
+
+    /**
+
+     Helper method for finding the intersections between the geometries bodies in the scene and a given ray.
+     Overrides the method in the Geometry class.
+     @param ray The ray to intersect with the geometric bodies in the scene.
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
+     */
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> intersections = null;
+        for(Intersectable intersectable : intersectables) {
+            List<GeoPoint> geometryIntersections = intersectable.findGeoIntersections(ray);
+            if (!geometryIntersections.isEmpty())
+                for (GeoPoint geo : geometryIntersections) {
+                    intersections.add(geo);
+                }
+        }
+        return intersections;
     }
 }

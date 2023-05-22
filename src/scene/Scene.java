@@ -1,8 +1,12 @@
 package scene;
 
 import elements.AmbientLight;
+import elements.LightSource;
 import geometries.Geometries;
 import primitives.Color;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Passive Data Structure which builds the scene for the picture that is being built.
@@ -20,6 +24,13 @@ public class Scene {
 
     // the 3D model (default is an empty model)
     public Geometries geometries = new Geometries();
+
+    public List<LightSource> lights = new LinkedList<>();
+
+    public Scene setLights(List<LightSource> lights) {
+        this.lights = lights;
+        return this;
+    }
 
     /**
      * Constructor which initializes the name of the scene and creates an empty collection of geometries

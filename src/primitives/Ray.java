@@ -11,6 +11,8 @@ import java.util.Objects;
 
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
+import geometries.Intersectable.GeoPoint;
+import geometries.Intersectable.GeoPoint;
 
 public class Ray {
     /**
@@ -26,7 +28,8 @@ public class Ray {
     /**
      * Creates a new Ray with the specified starting point and direction vector.
      * The direction vector is normalized to have a length of 1.
-     * @param p0 The starting point of the ray.
+     *
+     * @param p0  The starting point of the ray.
      * @param dir The direction vector of the ray.
      */
     public Ray(Point p0, Vector dir) {
@@ -36,6 +39,7 @@ public class Ray {
 
     /**
      * Returns the starting point of the ray.
+     *
      * @return The starting point of the ray.
      */
     public Point getP0() {
@@ -44,6 +48,7 @@ public class Ray {
 
     /**
      * Returns the direction vector of the ray.
+     *
      * @return The direction vector of the ray.
      */
     public Vector getDir() {
@@ -53,6 +58,7 @@ public class Ray {
     /**
      * Checks if this ray is equal to the specified object.
      * Two rays are equal if their starting points and direction vectors are equal.
+     *
      * @param o The object to compare with.
      * @return true if the objects are equal, false otherwise.
      */
@@ -72,6 +78,7 @@ public class Ray {
 
     /**
      * Computes the hash code of this ray.
+     *
      * @return The hash code of this ray.
      */
     @Override
@@ -81,6 +88,7 @@ public class Ray {
 
     /**
      * Returns a string representation of this ray.
+     *
      * @return A string representation of this ray.
      */
     @Override
@@ -91,30 +99,49 @@ public class Ray {
                 '}';
     }
 
-    public Point getPoint(double t){
+    public Point getPoint(double t) {
         if (isZero(t)) {
             return p0;
         }
         return p0.add(dir.scale(t));
     }
 
-    public Point findClosestPoint(List<Point> pointList) {
-        if (pointList.isEmpty()) {
+    /**
+     * Finds the closest point from a list of points.
+     *
+     * @param points The list of points to search.
+     * @return The closest point.
+     */
+    public Point findClosestPoint(List<Point> points) {
+        if (points == null || points.isEmpty()) {
             return null;
         }
-        double shortestDistance = this.p0.distance(pointList.get(0));
-        double tempDistance = 0;
-        Point closest = pointList.get(0);
+        GeoPoint closestGeoPoint = findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList());
+        return closestGeoPoint != null ? closestGeoPoint.point : null;
+    }
 
-        for(Point p : pointList) {
-            tempDistance = this.p0.distance(p);
+    /**
+     * Finds the closest GeoPoint from a list of GeoPoints.
+     *
+     * @param geoPointList The list of GeoPoints to search.
+     * @return The closest GeoPoint.
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList) {
+        if (geoPointList.isEmpty()) {
+            return null;
+        }
+        double shortestDistance = this.p0.distance(geoPointList.get(0).point);
+        double tempDistance = 0;
+        GeoPoint closest = geoPointList.get(0);
+
+        for (GeoPoint geo : geoPointList) {
+            tempDistance = this.p0.distance(geo.point);
             if (tempDistance < shortestDistance) {
                 shortestDistance = tempDistance;
-                closest = p;
+                closest = geo;
             }
         }
 
-        return closest;
+        return new GeoPoint(closest.geometry, closest.point);
     }
-
 }

@@ -61,21 +61,25 @@ public class Sphere extends RadialGeometry {
                 "center=" + center +
                 '}';
     }
+
     /**
 
-     Returns a list of intersection points between a given ray and the sphere.
+     Finds the intersections between the sphere and a given ray.
 
-     @param ray the ray to find intersections with
+     Overrides the method in the Geometry class.
 
-     @return a list of intersection points between the ray and the sphere. Returns null if there are no intersections.
+     @param ray The ray to intersect with the sphere.
+
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         Point P0 = ray.getP0();
         Vector v = ray.getDir();
 
         if (P0.equals(center)) {
-            return List.of(center.add(v.scale(radius)));
+            Point point = center.add(v.scale(radius));
+            return List.of(new GeoPoint(this, point));
         }
 
         Vector U = center.subtract(P0);
@@ -95,16 +99,38 @@ public class Sphere extends RadialGeometry {
         if (t1 > 0 && t2 > 0) {
             Point P1 = ray.getPoint(t1);
             Point P2 = ray.getPoint(t2);
-            return List.of(P1,P2);
+            return List.of(new GeoPoint(this, P1), new GeoPoint(this, P2));
         }
         if (t1 > 0) {
             Point P1 = ray.getPoint(t1);
-            return List.of(P1);
+            return List.of(new GeoPoint(this, P1));
         }
         if (t2 > 0) {
             Point P2 = ray.getPoint(t2);
-            return List.of(P2);
+            return List.of(new GeoPoint(this, P2));
         }
         return null;
+    }
+
+    /**
+
+     Helper method for finding the intersections between the sphere and a given ray.
+     Overrides the method in the Geometry class.
+     @param ray The ray to intersect with the sphere.
+     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
+     */
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<Point> intersections = this.findIntersections(ray);
+        if (intersections == null) {
+            return null;
+        }
+        Point point = intersections.get(0);
+        Point point2;
+        if (intersections.size() == 2) {
+            point2 = intersections.get(1);
+            return List.of(new GeoPoint(this, point), new GeoPoint(this, point2));
+        }
+        return List.of(new GeoPoint(this, point));
     }
 }
