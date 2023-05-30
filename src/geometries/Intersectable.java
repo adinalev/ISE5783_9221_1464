@@ -89,5 +89,9 @@ public abstract class Intersectable {
                     ", point=" + point +
                     '}';
         }
+
+        public Vector getNormal() {
+            return geometry.getNormal(point);
+        }
     }
 }

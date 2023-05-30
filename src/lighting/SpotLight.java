@@ -1,16 +1,17 @@
-package elements;
+package lighting;
 
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
+
+import static primitives.Util.isZero;
 
 /**
 
  Represents a spotlight in the scene, which is a type of point light with a specific direction.
  */
 public class SpotLight extends PointLight {
-    private Vector direction;
-    private double angle;
+    private final Vector direction;
 
     /**
 
@@ -21,7 +22,7 @@ public class SpotLight extends PointLight {
      */
     public SpotLight(Color color, Point position, Vector direction) {
         super(color, position);
-        this.direction = direction;
+        this.direction = direction.normalize();
     }
     /**
 
@@ -30,11 +31,16 @@ public class SpotLight extends PointLight {
      @return The intensity of the light.
      */
     public Color getIntensity(Point p) {
-        Color i0 = getIntensity();
+        Color iO = super.getIntensity(p);
+
         double dotProd = direction.dotProduct(getL(p));
+        if (isZero(dotProd)) {
+            return Color.BLACK;
+        }
+
         double max = Math.max(dotProd, 0);
-        Color iL = super.getIntensity(p);
-        return iL.scale(max);
+        //Color iL = super.getIntensity(p);
+        return iO.scale(max);
     }
     /**
 
@@ -46,8 +52,4 @@ public class SpotLight extends PointLight {
         return super.getL(p);
     }
 
-    public SpotLight setNarrowBeam(double n) {
-        this.angle = n;
-        return this;
-    }
 }

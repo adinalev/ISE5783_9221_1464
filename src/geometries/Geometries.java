@@ -51,12 +51,9 @@ public class Geometries extends Intersectable {
 
     /**
 
-     Finds the intersections between the plane and a given ray.
-
+     Finds the intersections between the Geometries and a given ray.
      Overrides the method in the Geometry class.
-
-     @param ray The ray to intersect with the plane.
-
+     @param ray The ray to intersect with the Geometries.
      @return A list of GeoPoints representing the intersections, or null if there are no intersections.
      */
     @Override

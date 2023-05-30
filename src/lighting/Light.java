@@ -1,4 +1,4 @@
-package elements;
+package lighting;
 
 import primitives.Color;
 import primitives.Double3;
@@ -8,7 +8,7 @@ import primitives.Double3;
  Represents a light source in the scene.
  */
 abstract class Light {
-    private Color intensity;
+    private final Color intensity;
 
     /**
 
@@ -34,5 +34,10 @@ abstract class Light {
      */
     public Light(Color iA, Double3 kA) {
         this.intensity = iA.scale(kA);
+    }
+
+    public Light(Color iA, double kA) {
+        Double3 ka = new Double3(kA);
+        this.intensity = iA.scale(ka);
     }
 }

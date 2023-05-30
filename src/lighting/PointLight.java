@@ -1,7 +1,8 @@
 
-package elements;
+package lighting;
 
 import primitives.Color;
+import primitives.Double3;
 import primitives.Point;
 import primitives.Vector;
 
@@ -10,8 +11,10 @@ import primitives.Vector;
  Represents a point light source in the scene.
  */
 public class PointLight extends Light implements LightSource {
-    private Point position;
-    private double kC = 1, kL = 0, kQ = 0;
+    private final Point position;
+    private Double3 kC = Double3.ONE;
+    private Double3 kL = Double3.ZERO;
+    private Double3 kQ = Double3.ZERO;
 
     /**
 
@@ -20,7 +23,7 @@ public class PointLight extends Light implements LightSource {
      @return The updated PointLight object.
      */
     public PointLight setKc(double kC) {
-        this.kC = kC;
+        this.kC = new Double3(kC);
         return this;
     }
     /**
@@ -30,7 +33,7 @@ public class PointLight extends Light implements LightSource {
      @return The updated PointLight object.
      */
     public PointLight setKl(double kL) {
-        this.kL = kL;
+        this.kL = new Double3(kL);
         return this;
     }
     /**
@@ -40,7 +43,7 @@ public class PointLight extends Light implements LightSource {
      @return The updated PointLight object.
      */
     public PointLight setKq(double kQ) {
-        this.kQ = kQ;
+        this.kQ = new Double3(kQ);
         return this;
     }
     /**
@@ -60,10 +63,10 @@ public class PointLight extends Light implements LightSource {
      @return The intensity of the light.
      */
     public Color getIntensity(Point p) {
-        double d = position.distance(p);
-        double d2 = position.distanceSquared(p);
+        double d = p.distance(position);
+        double d2 = p.distanceSquared(position);
         Color i0 = getIntensity();
-        double coeff = kC + kL * d + kQ * d2;
+        Double3 coeff = (kC.add(kL.scale(d))).add(kQ.scale(d2));
         return i0.reduce(coeff);
     }
     /**
@@ -73,7 +76,7 @@ public class PointLight extends Light implements LightSource {
      @return The direction vector of the light.
      */
     public Vector getL(Point p) {
-        return p.subtract(position);
+        return p.subtract(position).normalize();
     }
 
     /**
@@ -82,6 +85,21 @@ public class PointLight extends Light implements LightSource {
      * @return The distance between the point light and the point on the object
      */
     public double getDistance(Point point) {
-        return position.distance(point);
+        return point.distance(position);
+    }
+
+    public PointLight setkC(Double3 kC) {
+        this.kC = kC;
+        return this;
+    }
+
+    public PointLight setkL(Double3 kL) {
+        this.kL = kL;
+        return this;
+    }
+
+    public PointLight setkQ(Double3 kQ) {
+        this.kQ = kQ;
+        return this;
     }
 }

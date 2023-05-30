@@ -1,13 +1,10 @@
 package lighting;
 
-import elements.AmbientLight;
-import elements.SpotLight;
 import org.junit.jupiter.api.Test;
 
 import static java.awt.Color.*;
 
 import geometries.*;
-import lighting.*;
 import primitives.*;
 import renderer.*;
 import scene.Scene;

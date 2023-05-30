@@ -16,6 +16,10 @@ import geometries.Intersectable.GeoPoint;
 
 public class Ray {
     /**
+     * Amount to move the ray's head away from the geometry when making shadow, reflection, and refraction rays
+     */
+    private static final double DELTA = 0.1;
+    /**
      * The starting point of the ray.
      */
     protected final Point p0;
@@ -35,6 +39,11 @@ public class Ray {
     public Ray(Point p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalize();
+    }
+    public Ray(Point point, Vector dir, Vector normal) {
+        this.dir = dir.normalize();
+        Vector deltaV = normal.dotProduct(this.dir) >= 0 ? normal.scale(DELTA) : normal.scale(-DELTA);
+        p0 = point.add(deltaV);
     }
 
     /**

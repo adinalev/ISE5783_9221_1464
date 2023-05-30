@@ -10,6 +10,42 @@ public class Material {
     public Double3 kS = new Double3(0, 0, 0);
     public int nShininess = 0;
 
+    // the transparency coefficient which is initialized to 0.0
+    public Double3 kT = new Double3(0.0);
+
+    // the reflection coefficient which is initialized to 0.0
+    public Double3 kR = new Double3(0.0);
+
+    /**
+     * Sets the transparency coefficient using the builder pattern.
+     * @param kT The value of the transparency coefficient
+     * @return Material object to use for chaining.
+     */
+    public Material setKt(Double3 kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    public Material setKt(double kT) {
+        this.kT = new Double3(kT);
+        return this;
+    }
+
+    /**
+     * Sets the reflection coefficient using the builder pattern.
+     * @param kR The value of the reflection coefficient
+     * @return Material object to use for chaining.
+     */
+    public Material setKr(double kR) {
+        this.kR = new Double3(kR);
+        return this;
+    }
+
+    public Material setKr(Double3 kR) {
+        this.kR = kR;
+        return this;
+    }
+
     /**
 
      Sets the diffuse reflection coefficient of the material.

@@ -186,16 +186,21 @@ public class Camera {
          // traverse through the rows and columms
          for (int row = 0; row < nX; row++) {
              for (int column = 0; column < nY; column++) {
-                // construct a ray for each pixel
-                Ray ray = this.constructRay(nX, nY, column, row);
-                // calculate the color
-                Color color = this.rayTracerBase.traceRay(ray);
-                // store the color in the corresponding pixel
+                 Color color = castRay(nX, nY, row, column);
+                 // store the color in the corresponding pixel
                 this.imageWriter.writePixel(column, row, color);
              }
          }
          return this;
      }
+
+    private Color castRay(int nX, int nY, int row, int column) {
+        // construct a ray for each pixel
+        Ray ray = this.constructRay(nX, nY, column, row);
+        // calculate the color
+        Color color = this.rayTracerBase.traceRay(ray);
+        return color;
+    }
 
     /**
      * Prints the grid over the scene

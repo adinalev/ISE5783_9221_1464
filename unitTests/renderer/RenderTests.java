@@ -4,11 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import geometries.Sphere;
 import geometries.Triangle;
-import elements.AmbientLight;
+import lighting.AmbientLight;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
-import renderer.ImageWriter;
 
 import static java.awt.Color.*;
 
