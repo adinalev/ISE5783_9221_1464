@@ -1,4 +1,5 @@
 package renderer;
+import geometries.Intersectable;
 import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
@@ -184,8 +185,8 @@ public class Camera {
          int nY = imageWriter.getNy();
 
          // traverse through the rows and columms
-         for (int row = 0; row < nX; row++) {
-             for (int column = 0; column < nY; column++) {
+         for (int row = 0; row < nY; row++) {
+             for (int column = 0; column < nX; column++) {
                  Color color = castRay(nX, nY, row, column);
                  // store the color in the corresponding pixel
                 this.imageWriter.writePixel(column, row, color);

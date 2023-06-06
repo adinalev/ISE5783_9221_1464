@@ -16,36 +16,7 @@ public class PointLight extends Light implements LightSource {
     private Double3 kL = Double3.ZERO;
     private Double3 kQ = Double3.ZERO;
 
-    /**
 
-     Sets the constant attenuation factor of the point light.
-     @param kC The constant attenuation factor.
-     @return The updated PointLight object.
-     */
-    public PointLight setKc(double kC) {
-        this.kC = new Double3(kC);
-        return this;
-    }
-    /**
-
-     Sets the linear attenuation factor of the point light.
-     @param kL The linear attenuation factor.
-     @return The updated PointLight object.
-     */
-    public PointLight setKl(double kL) {
-        this.kL = new Double3(kL);
-        return this;
-    }
-    /**
-
-     Sets the quadratic attenuation factor of the point light.
-     @param kQ The quadratic attenuation factor.
-     @return The updated PointLight object.
-     */
-    public PointLight setKq(double kQ) {
-        this.kQ = new Double3(kQ);
-        return this;
-    }
     /**
 
      Constructs a new PointLight with the specified color and position.
@@ -64,9 +35,9 @@ public class PointLight extends Light implements LightSource {
      */
     public Color getIntensity(Point p) {
         double d = p.distance(position);
-        double d2 = p.distanceSquared(position);
+        //double d2 = p.distanceSquared(position);
         Color i0 = getIntensity();
-        Double3 coeff = (kC.add(kL.scale(d))).add(kQ.scale(d2));
+        Double3 coeff = (kC.add(kL.scale(d))).add(kQ.scale(d*d));
         return i0.reduce(coeff);
     }
     /**
@@ -100,6 +71,37 @@ public class PointLight extends Light implements LightSource {
 
     public PointLight setkQ(Double3 kQ) {
         this.kQ = kQ;
+        return this;
+    }
+
+    /**
+
+     Sets the constant attenuation factor of the point light.
+     @param kC The constant attenuation factor.
+     @return The updated PointLight object.
+     */
+    public PointLight setKc(double kC) {
+        this.kC = new Double3(kC);
+        return this;
+    }
+    /**
+
+     Sets the linear attenuation factor of the point light.
+     @param kL The linear attenuation factor.
+     @return The updated PointLight object.
+     */
+    public PointLight setKl(double kL) {
+        this.kL = new Double3(kL);
+        return this;
+    }
+    /**
+
+     Sets the quadratic attenuation factor of the point light.
+     @param kQ The quadratic attenuation factor.
+     @return The updated PointLight object.
+     */
+    public PointLight setKq(double kQ) {
+        this.kQ = new Double3(kQ);
         return this;
     }
 }

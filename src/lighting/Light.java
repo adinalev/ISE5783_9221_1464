@@ -26,18 +26,4 @@ abstract class Light {
     public Color getIntensity() {
         return intensity;
     }
-    /**
-
-     Constructs a new Light with the specified ambient intensity and attenuation factors.
-     @param iA The ambient intensity of the light.
-     @param kA The attenuation factors of the light.
-     */
-    public Light(Color iA, Double3 kA) {
-        this.intensity = iA.scale(kA);
-    }
-
-    public Light(Color iA, double kA) {
-        Double3 ka = new Double3(kA);
-        this.intensity = iA.scale(ka);
-    }
 }

@@ -41,12 +41,20 @@ public class Vector extends Point {
      * @param o the object to compare with
      * @return true if the object is equal to the vector, false otherwise
      */
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Vector vector)) return false;
+//        return xyz.equals(vector.xyz);
+//    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Vector vector)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector vector = (Vector) o;
         return xyz.equals(vector.xyz);
     }
+
 
     /**
      * Returns the length of the vector.
