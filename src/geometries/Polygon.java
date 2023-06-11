@@ -97,69 +97,62 @@ public class Polygon extends Geometry {
 
     /**
 
-     Finds the intersections between the polygon and a given ray.
-
-     Overrides the method in the Geometry class.
-
-     @param ray The ray to intersect with the polygon.
-
-     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
+     * Finds the intersections between the polygon and a given ray.
+     * Overrides the method in the Geometry class.
+     * @param ray The ray to intersect with the polygon.
+     * @return A list of GeoPoints representing the intersections, or null if there are no intersections.
      */
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray) {
-        // Get the origin and direction of the ray
-        Point p0 = ray.getP0();
-        Vector v = ray.getDir();
-
-        Vector v1;
-        Vector v2;
-        Vector n;
-        double t;
-
-        // Check if the plane of the polygon has intersection points
-        if (plane.findIntersections(ray) == null)
-            // If it doesn't, then that means the polygon for sure does not have intersection points
+        // find the intersections points of the plane field of the polygon class
+        List<GeoPoint> result = plane.findGeoIntersections(ray);
+        if (result == null) {
             return null;
-
-        // Only create a list once we know there are intersection points
-        List<Point> planeIntersections = plane.findIntersections(ray);
-
-        // Check the bounds of the polygon
-        for (int i = 0; i < vertices.size(); i++) {
-            if (i == vertices.size() - 1) {
-                v1 = vertices.get(i).subtract(p0);
-                v2 = vertices.get(0).subtract(p0);
-                n = v1.crossProduct(v2).normalize();
-                t = alignZero(n.dotProduct(v));
-            } else {
-                v1 = vertices.get(i).subtract(p0);
-                v2 = vertices.get(i + 1).subtract(p0);
-                n = v1.crossProduct(v2).normalize();
-                t = alignZero(n.dotProduct(v));
-            }
-            if (t == 0)
-                // If t is zero, the ray is parallel to the plane of the polygon and does not intersect it
-                return null;
         }
-
-        // If the point lies within the bounds of the polygon, return the list containing the intersection point
-        return List.of(new GeoPoint(this, planeIntersections.get(0)));
+        return result;
     }
 
     /**
 
-     Helper method for finding the intersections between the polygon and a given ray.
-     Overrides the method in the Geometry class.
-     @param ray The ray to intersect with the polygon.
-     @return A list of GeoPoints representing the intersections, or null if there are no intersections.
-     */
+    * Helper method for finding the intersections between the polygon and a given ray.
+    * Overrides the method in the Geometry class.
+    * @param ray The ray to intersect with the polygon.
+    * @return A list of GeoPoints representing the intersections, or null if there are no intersections.
+    */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<Point> intersections = this.findIntersections(ray);
+        // run the regular method on the given polygon
+        List<GeoPoint> intersections = this.findGeoIntersections(ray);
         if (intersections == null) {
             return null;
         }
-        Point point = intersections.get(0);
-        return List.of(new GeoPoint(this, point));
+
+        Point p0 = ray.getP0();
+        Vector direction = ray.getDir();
+
+        Vector v1 = p0.subtract(vertices.get(1));
+        Vector v2 = p0.subtract(vertices.get(0));
+
+        double check = alignZero(direction.dotProduct(v1.crossProduct(v2)));
+        if (isZero(check)) {
+            return null;
+        }
+
+        for (int i = vertices.size() - 1; i > 0; i--) {
+            v1 = v2;
+            v2 = p0.subtract(vertices.get(i));
+
+            check = alignZero(direction.dotProduct(v1.crossProduct(v2)));
+            if (isZero(check)) {
+                return null;
+            }
+
+            if (!(check > 0)) {
+                return null;
+            }
+        }
+        Point found = intersections.get(0).point;
+
+        return List.of(new GeoPoint(this, found));
     }
 }

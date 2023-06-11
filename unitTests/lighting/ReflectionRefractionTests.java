@@ -223,29 +223,31 @@ public class ReflectionRefractionTests {
 
       scene.getGeometries().add(
               new Triangle(new Point(50, -50, 0), new Point(-50, -50, 0), new Point(0, 0, -50)) //
-                      .setEmission(new Color(200,80,79.61)) //
+                      .setEmission(new Color(200, 80, 79.61)) //
                       .setMaterial(new Material().setKt(0.9).setKs(0.4).setShininess(20).setKr(0.01)), //
               new Sphere(40d, new Point(0, 0, -40)).setEmission(new Color(GRAY)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.4)), //
-              new Sphere(5d,new Point(0, 0, -40)).setEmission(new Color(YELLOW)) //
+              new Sphere(5d, new Point(0, 0, -40)).setEmission(new Color(YELLOW)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0)), //
-              new Sphere(7d,new Point(-35, 19, -20)).setEmission(new Color(BLUE)) //
+              new Sphere(7d, new Point(-35, 19, -20)).setEmission(new Color(BLUE)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0)), //
-              new Sphere(7d,new Point(35, 19, -20)).setEmission(new Color(BLUE)) //
+              new Sphere(7d, new Point(35, 19, -20)).setEmission(new Color(BLUE)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0)), //
-              new Sphere(7d,new Point(15, 37, -20)).setEmission(new Color(BLUE)) //
+              new Sphere(7d, new Point(15, 37, -20)).setEmission(new Color(BLUE)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0)), //
-              new Sphere(7d,new Point(-15, 37, -20)).setEmission(new Color(BLUE)) //
+              new Sphere(7d, new Point(-15, 37, -20)).setEmission(new Color(BLUE)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0)), //
-              new Sphere(7d,new Point(38, -6, -20)).setEmission(new Color(BLUE)) //
+              new Sphere(7d, new Point(38, -6, -20)).setEmission(new Color(BLUE)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0)), //
-              new Sphere(7d,new Point(-38, -6, -20)).setEmission(new Color(BLUE)) //
+              new Sphere(7d, new Point(-38, -6, -20)).setEmission(new Color(BLUE)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0)), //
-              new Triangle(new Point(-38, -6, -40), new Point(-35, 19, -40), new Point(0,0,-40) ).setEmission(new Color(200,80,79.61)) //
+              new Triangle(new Point(-38, -6, -40), new Point(-35, 19, -40), new Point(0, 0, -40)).setEmission(new Color(200, 80, 79.61)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)), //
-              new Triangle(new Point(15, 37, -40), new Point(-15, 37, -40), new Point(0,0,-40) ).setEmission(new Color(200,80,79.61)) //
+              new Triangle(new Point(15, 37, -40), new Point(-15, 37, -40), new Point(0, 0, -40)).setEmission(new Color(200, 80, 79.61)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)), //
-              new Triangle(new Point(38, -6, -40), new Point(35, 19, -40), new Point(0,0,-40) ).setEmission(new Color(200,80,79.61)) //
+              new Triangle(new Point(38, -6, -40), new Point(35, 19, -40), new Point(0, 0, -40)).setEmission(new Color(200, 80, 79.61)) //
+                      .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)), //
+              new Polygon(new Point(-35, 57, -50), new Point(-5, 57, -50), new Point(15, 39, -50), new Point(-55, 39, -50)).setEmission(new Color(PINK)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)) //
       );
 
