@@ -114,6 +114,15 @@ public class Point {
         return new Vector(xyz.subtract(secondPoint.xyz));
     }
 
+    /**
+     * adds two points together (for super sampling)
+     * @param point
+     * @return point that is the sum of the two points
+     */
+    public Point add(Point point) {
+        return new Point(this.xyz.add(point.xyz));
+    }
+
     public double getX() {
         return xyz.d1;
     }

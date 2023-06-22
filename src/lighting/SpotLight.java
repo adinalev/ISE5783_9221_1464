@@ -4,6 +4,7 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -33,7 +34,7 @@ public class SpotLight extends PointLight {
     public Color getIntensity(Point p) {
         Color iO = super.getIntensity(p);
 
-        double dotProd = direction.dotProduct(getL(p));
+        double dotProd = alignZero(direction.dotProduct(getL(p)));
         if (isZero(dotProd)) {
             return Color.BLACK;
         }
@@ -42,14 +43,4 @@ public class SpotLight extends PointLight {
         //Color iL = super.getIntensity(p);
         return iO.scale(max);
     }
-    /**
-
-     Gets the direction vector from the spotlight to the specified point.
-     @param p The point at which to calculate the direction.
-     @return The direction vector of the light.
-     */
-    public Vector getL(Point p) {
-        return super.getL(p);
-    }
-
 }

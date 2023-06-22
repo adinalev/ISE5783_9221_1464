@@ -5,6 +5,7 @@ import primitives.*;
 import scene.Scene;
 import geometries.Intersectable.GeoPoint;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.awt.Color.BLACK;
@@ -29,6 +30,10 @@ public class RayTracerBasic extends RayTracerBase {
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
 
+    private boolean superSamplingON = false;
+    private int superSamplingGridSize; // for n, the grid will be 9x9
+
+    private int numOfSSRays;
     public RayTracerBasic(Scene scene) {
         super(scene);
     }
@@ -155,13 +160,21 @@ public class RayTracerBasic extends RayTracerBase {
 
      * Constructs a reflected ray given an incident ray, a point of intersection,
      * and the surface normal at that point.
-     * @param ray The incident ray.
+     * @param dir The direction of the ray.
      * @param point The point of intersection.
      * @param normal The surface normal at the intersection point.
      * @return The reflected ray.
      */
-    public Ray constructReflectedRay(Ray ray, Point point, Vector normal) {
-        Vector r = ray.getDir().subtract(normal.scale(2 * normal.dotProduct(ray.getDir())));
+    public Ray constructReflectedRay(Vector dir, Point point, Vector normal) {
+//        Vector r = dir.subtract(normal.scale(2 * normal.dotProduct(dir)));
+//        return new Ray(point, r, normal);
+        double vn = dir.dotProduct(normal);
+
+        if (alignZero(vn) == 0) {
+            return null;
+        }
+
+        Vector r = dir.subtract(normal.scale(2 * vn));
         return new Ray(point, r, normal);
     }
 
@@ -257,6 +270,7 @@ public class RayTracerBasic extends RayTracerBase {
         return level == 1 ? color : color.add(calcGlobalEffects(gp,ray,level,k));
     }
 
+
     /**
 
      * Calculates the global effects (reflection and refraction) at an intersection point.
@@ -268,33 +282,199 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private Color calcGlobalEffects(GeoPoint gp, Ray ray, int level, Double3 k) {
         Color color = Color.BLACK;
-        Vector n = gp.geometry.getNormal(gp.point).normalize();
+        Vector n = gp.geometry.getNormal(gp.point);
         Material material = gp.geometry.getMaterial();
         //Double3 kr = gp.geometry.getMaterial().kR;
         Double3 kkr = k.product(material.kR);
         Double3 kkt = k.product(material.kT);
 
         if (!(kkr.lowerThan(MIN_CALC_COLOR_K))) {
-            color = color.add(calcGlobalEffects(constructReflectedRay(ray, gp.point,n), level, material.kR, kkr));
+            color = color.add(calcGlobalEffects(constructReflectedRay(ray.getDir(), gp.point,n), level, material.kR, kkr));
         }
 
         if (!(kkt.lowerThan(MIN_CALC_COLOR_K))) {
             color = color.add(calcGlobalEffects(constructRefractedRay(gp.point,ray,n), level, material.kT, kkt));
         }
+//        if (!(kkr.lowerThan(MIN_CALC_COLOR_K))) {
+//            List<Ray> beam = shootBeam(constructReflectedRay(ray, gp.point, n));
+//            Color beamColor = beamCalcColor(beam);
+//            color = color.add(beamColor);
+//        }
+//
+//        if (!(kkt.lowerThan(MIN_CALC_COLOR_K))) {
+//            List<Ray> beam = shootBeam(constructRefractedRay(gp.point, ray, n));
+//            Color beamColor = beamCalcColor(beam);
+//            color = color.add(beamColor);
+//        }
         return color;
     }
 
-    /**
+//    private Color calcGlobalEffects(GeoPoint gp, Ray ray, int level, Color color) {
+//        if (level == 0 || gp.geometry.getMaterial().kT == Double3.ZERO && gp.geometry.getMaterial().kR == Double3.ZERO) {
+//            return color;
+//        }
+//
+//        Vector n = gp.geometry.getNormal(gp.point);
+//        Material material = gp.geometry.getMaterial();
+//
+//        Ray reflectedRay = constructReflectedRay(ray, gp.point, n);
+//        Color reflectedColor = calcColor(gp, reflectedRay, level - 1, ).scale(material.kR); // GeoPoint gp, Ray ray, int level, Double3 k)
+//        color = color.add(reflectedColor);
+//
+//        Ray refractedRay = constructRefractedRay(gp.point, ray, n);
+//        Color refractedColor = calcColor(refractedRay, level - 1).scale(material.kT);
+//        color = color.add(refractedColor);
+//
+//        return color;
+//    }
 
+
+    /**
      * Recursive helper method for calculating global effects (reflection and refraction).
-     * @param ray The incident ray.
-     * @param level The recursion level.
-     * @param kx The transparency factor.
-     * @param kkx The product of the transparency factor and the material's reflection or refraction factor.
+     *
+     * @param ray    The incident ray.
+     * @param level  The recursion level.
+     * @param kx     The transparency factor.
+     * @param kkx    The product of the transparency factor and the material's reflection or refraction factor.
      * @return The color resulting from the global effects.
      */
-    private Color calcGlobalEffects(Ray ray, int level, Double3 kx, Double3 kkx ) {
+    private Color calcGlobalEffects(Ray ray, int level, Double3 kx, Double3 kkx) {
+        // Find the closest intersection point between the ray and scene objects
         GeoPoint gp = findClosestIntersection(ray);
-        return(gp == null ? scene.getBackground() : calcColor(gp, ray, level-1, kkx).scale(kx));
+
+        // If super sampling is enabled, shoot multiple rays (beam) and calculate the color
+        if (superSamplingON == true) {
+            List<Ray> beam = shootBeam(ray);
+            Color beamColor = beamCalcColor(beam);
+
+            // If there is no intersection point, return the background color;
+            // otherwise, calculate the color recursively and add the beam color, then scale it by the transparency factor
+            return (gp == null) ? scene.getBackground() : add(calcColor(gp, ray, level - 1, kkx), beamColor).scale(kx);
+        }
+
+        // If super sampling is not enabled, calculate the color recursively and scale it by the transparency factor
+        return (gp == null) ? scene.getBackground() : calcColor(gp, ray, level - 1, kkx).scale(kx);
     }
+
+    /**
+     * Sets the flag indicating whether super sampling is enabled or not.
+     *
+     * @param superSamplingON A boolean value indicating whether super sampling is enabled.
+     * @return The updated RayTracerBasic object.
+     */
+    public RayTracerBasic setSuperSamplingON(boolean superSamplingON) {
+        this.superSamplingON = superSamplingON;
+        return this;
+    }
+
+    /**
+     * Sets the grid size for super sampling.
+     *
+     * @param superSamplingGridSize The size of the super sampling grid.
+     * @return The updated RayTracerBasic object.
+     */
+    public RayTracerBasic setSuperSamplingGridSize(int superSamplingGridSize) {
+        this.superSamplingGridSize = superSamplingGridSize;
+        return this;
+    }
+
+
+    /**
+     * sets the number of rays to shoot for super sampling
+     * @param numOfSSRays
+     * @return Camera object for chaining
+     */
+    public RayTracerBasic setNumOfSSRays(int numOfSSRays) {
+        this.numOfSSRays = numOfSSRays;
+        return this;
+    }
+
+    /**
+     * shoots multiple rays in the shape of a grid
+     * @param mainRay
+     * @return a list of rays
+     */
+    private List<Ray> shootBeam(Ray mainRay) {
+        Point mrP0 = mainRay.getP0();
+        List<Ray> beam = new LinkedList<Ray>();
+
+        // get to the center of the target area (square)
+        Point center = mrP0.add(mainRay.getDir());
+
+        double halfSize = superSamplingGridSize / 2;
+        // get the left corner point and use it as a basis of where to start from
+        Point startingPoint = center.add(new Point(halfSize,halfSize,0));
+        double intervalHelper = superSamplingGridSize/(Math.sqrt(numOfSSRays));
+
+        // shoot rays in the shape of a grid
+        for (int i = 0; i < Math.sqrt(numOfSSRays); i++) {
+            for (int j = 0; j < Math.sqrt(numOfSSRays); j++) {
+                Point interval = new Point(i*intervalHelper, j*intervalHelper, 0);
+
+                // add the interval to the startingPoint to get a point in the grid
+                Point gridPoint = startingPoint.add(interval);
+
+                // create the ray for this new spot in the grid
+                Ray shootRay = new Ray(mrP0, gridPoint.subtract(mrP0));
+
+                // add this ray to the list of rays to shoot
+                beam.add(shootRay);
+            }
+        }
+        // add corner points
+
+        return beam;
+    }
+
+    /**
+     * calculate the color
+     * @param beam list of rays
+     * @return the average of all the colors sent in
+     */
+    private Color beamCalcColor(List<Ray> beam) {
+        //Color color;
+        Color result = Color.BLACK;
+
+        //Color result = this.scene.getAmbientLight().getIntensity();
+
+        // calculate the color of each ray and add them all together
+        for (int i = 0; i < beam.size(); i++) {
+            //color = traceRay(beam.get(i));
+            //result = result.add(color);
+            GeoPoint gp = findClosestIntersection(beam.get(i));
+
+            //if it does not hit anything added the background
+            if(gp == null) {
+                result = result.add(scene.getBackground());
+            }
+
+            //else add the color of the first object it hits
+            else {
+                result = result.add(gp.geometry.getEmission());
+            }
+        }
+
+        // divide the color by the total number of rays to get the average color
+        return result.reduce(numOfSSRays);
+    }
+
+    /**
+     * Adds two colors together.
+     *
+     * @param color1 The first color to be added.
+     * @param color2 The second color to be added.
+     * @return The resulting color from adding color1 and color2.
+     */
+    public Color add(Color color1, Color color2) {
+        // Retrieve the RGB values of color1 and color2
+        Double3 firstColor = color1.getRGB();
+        Double3 secondColor = color2.getRGB();
+
+        // Add the RGB values together
+        Double3 added = firstColor.add(secondColor);
+
+        // Create a new Color object from the resulting RGB values
+        return new Color(added);
+    }
+
 }

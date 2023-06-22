@@ -153,4 +153,22 @@ public class Ray {
 
         return new GeoPoint(closest.geometry, closest.point);
     }
+
+    /**
+     * construct a ray through the corner point
+     * @param center
+     * @param x
+     * @param y
+     * @return ray (for the corner)
+     */
+    public Ray createRayForSS(Point center, double x, double y) {
+        Point head = this.p0;
+
+        // create a corner point with the given x and y values
+        Point cornerPoint = center.add(new Point(x,y,0));
+
+        // return the ray created from the head of the ray that called the
+        // function and the corresponding vector from that point to the corner point found above
+        return new Ray(head, cornerPoint.subtract(head));
+    }
 }

@@ -246,9 +246,9 @@ public class ReflectionRefractionTests {
               new Triangle(new Point(15, 37, -40), new Point(-15, 37, -40), new Point(0, 0, -40)).setEmission(new Color(200, 80, 79.61)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)), //
               new Triangle(new Point(38, -6, -40), new Point(35, 19, -40), new Point(0, 0, -40)).setEmission(new Color(200, 80, 79.61)) //
-                      .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)), //
-              new Polygon(new Point(-35, 57, -50), new Point(-5, 57, -50), new Point(15, 39, -50), new Point(-55, 39, -50)).setEmission(new Color(PINK)) //
                       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)) //
+             // new Polygon(new Point(-35, 57, -50), new Point(-5, 57, -50), new Point(15, 39, -50), new Point(-55, 39, -50)).setEmission(new Color(PINK)) //
+               //       .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setKt(0.1)) //
       );
 
       scene.getLights().add(new SpotLight(new Color(400, 300, 200), new Point(-250, 200, -50), new Vector(175, 25, -75)) //
@@ -256,7 +256,7 @@ public class ReflectionRefractionTests {
 
       ImageWriter imageWriter = new ImageWriter("myTest", 600, 600);
       camera.setImageWriter(imageWriter) //
-              .setRayTracer(new RayTracerBasic(scene)) //
+              .setRayTracer(new RayTracerBasic(scene).setSuperSamplingON(false).setNumOfSSRays(20).setSuperSamplingGridSize(9)) //
               .renderImage() //
               .writeToImage();
    }

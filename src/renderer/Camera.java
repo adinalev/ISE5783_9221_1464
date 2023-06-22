@@ -5,9 +5,12 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 import renderer.ImageWriter;
-
+import geometries.Intersectable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.MissingResourceException;
 
+import static java.awt.Color.*;
 import static primitives.Util.isZero;
 
 /**
@@ -34,6 +37,8 @@ public class Camera {
 
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
+
+
     /**
 
      Constructs a new Camera object with the given location, vUp, and vTo vectors.
@@ -168,30 +173,46 @@ public class Camera {
      */
     public Camera renderImage() {
          // check if any of the fields are null
-         if (p0 == null || vUp == null || vTo == null || vRight == null || width == 0 || height == 0 || distance == 0) {
+        if (p0 == null || vUp == null || vTo == null || vRight == null || width == 0 || height == 0 || distance == 0) {
              throw new MissingResourceException("Missing resources.", Camera.class.getName(), "");
-         }
+        }
          // check if the ImageWriter field is null
-         if (imageWriter == null) {
+        if (imageWriter == null) {
              throw new MissingResourceException("ImageWriter object cannot be null.", ImageWriter.class.getName(), "");
          }
         // check if the RayTracerBase field is null
         if (rayTracerBase == null) {
              throw new MissingResourceException("RayTracerBase object cannot be null.", RayTracerBase.class.getName(), "");
-         }
+        }
 
-         // set the columns and the rows
-         int nX = imageWriter.getNx();
-         int nY = imageWriter.getNy();
+        // set the columns and the rows
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
 
-         // traverse through the rows and columms
-         for (int row = 0; row < nY; row++) {
-             for (int column = 0; column < nX; column++) {
-                 Color color = castRay(nX, nY, row, column);
-                 // store the color in the corresponding pixel
-                this.imageWriter.writePixel(column, row, color);
-             }
-         }
+        // if super sampling is turned on, then calculate the color of the pixels using the supersampling method
+//        if (superSamplingON == true) {
+//            for (int row = 0; row < nY; row++) {
+//                for (int column = 0; column < nX; column++) {
+//                    Ray mainRay = constructRay(nX, nY, column, row);
+//                    List<Ray> rays = shootBeam(mainRay);
+//                    rays.add(mainRay);
+//                    Color color = beamCalcColor(rays);
+//                    // store the color in the corresponding pixel
+//                    this.imageWriter.writePixel(column, row, color);
+//                }
+//            }
+//        }
+//        else {
+            // traverse through the rows and columms
+            for (int row = 0; row < nY; row++) {
+                for (int column = 0; column < nX; column++) {
+                    Color color = castRay(nX, nY, row, column);
+                    // store the color in the corresponding pixel
+                    this.imageWriter.writePixel(column, row, color);
+                }
+            }
+        //}
+
          return this;
      }
 
@@ -252,6 +273,11 @@ public class Camera {
         this.rayTracerBase = rayTracer;
         return this;
     }
+
+    // to generate beams of rays
+    //public Camera generateBeam() {
+
+    //}
 
 
 }

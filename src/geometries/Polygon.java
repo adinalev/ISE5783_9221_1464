@@ -95,6 +95,8 @@ public class Polygon extends Geometry {
         return plane.getNormal();
     }
 
+
+
     /**
 
      * Finds the intersections between the polygon and a given ray.
