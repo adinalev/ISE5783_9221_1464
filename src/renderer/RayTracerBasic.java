@@ -150,7 +150,7 @@ public class RayTracerBasic extends RayTracerBase {
         for (GeoPoint geo : intersections) {
             //if (geo.geometry.getMaterial().kT == Double3.ZERO) {
             if (lightRay.getP0().distance(geo.point) < distance) { // lightRay.getP0().distance(geo.point) < distance
-                return geo.geometry.getMaterial().kT.product(ktr);
+                ktr = geo.geometry.getMaterial().kT.product(ktr);
             }
         }
         return ktr;
