@@ -266,87 +266,87 @@ public class GlossySurfacesBlurredGlassTests {
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, 560,0), new Point(-50, 480,0), new Point(-150, 430,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, 350,0), new Point(-50, 480,0), new Point(-150, 430,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, 350,0), new Point(-150, 300,0), new Point(-150, 430,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, 350,0), new Point(-150, 300,0), new Point(-50, 220,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, 130,0), new Point(-150, 300,0), new Point(-50, 220,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, 130,0), new Point(-50,90,0), new Point(-50, 220,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
 
                 new Triangle(new Point(-150, 130,0), new Point(-50,90,0), new Point(-150,0,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
         new Triangle(new Point(-50, -50,0), new Point(-50,90,0), new Point(-150,0,0))
                 .setEmission(new Color(blue)) //
                 .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
         new Triangle(new Point(-50, -50,0), new Point(-150,-130,0), new Point(-150,0,0))
-                .setEmission(new Color(pink)) //
+                .setEmission(new Color(170, 51, 106)) //
                 .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, -50,0), new Point(-150,-130,0), new Point(-50,-180,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, -260,0), new Point(-150,-130,0), new Point(-50,-180,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, -260,0), new Point(-50,-310,0), new Point(-50,-180,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, -260,0), new Point(-50,-310,0), new Point(-150,-390,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
 
 
                 // floor tiles front row
                 new Triangle(new Point(-150, 560,0), new Point(-250, 480,0), new Point(-250, 610,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, 560,0), new Point(-250, 480,0), new Point(-150, 430,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-250, 350,0), new Point(-250, 480,0), new Point(-150, 430,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-250, 350,0), new Point(-150, 300,0), new Point(-150, 430,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-250, 350,0), new Point(-150, 300,0), new Point(-250, 220,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, 130,0), new Point(-150, 300,0), new Point(-250, 220,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, 130,0), new Point(-250,90,0), new Point(-250, 220,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
 
                 new Triangle(new Point(-150, 130,0), new Point(-250,90,0), new Point(-150,0,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-250, -50,0), new Point(-250,90,0), new Point(-150,0,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-250, -50,0), new Point(-150,-130,0), new Point(-150,0,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-250, -50,0), new Point(-150,-130,0), new Point(-250,-180,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, -260,0), new Point(-150,-130,0), new Point(-250,-180,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, -260,0), new Point(-250,-310,0), new Point(-250,-180,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-150, -260,0), new Point(-250,-310,0), new Point(-150,-390,0))
                         .setEmission(new Color(blue)) //
@@ -354,62 +354,67 @@ public class GlossySurfacesBlurredGlassTests {
 
                 // floor tiles back row
                 new Triangle(new Point(50, 560,0), new Point(-50, 480,0), new Point(-50, 610,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(50, 560,0), new Point(-50, 480,0), new Point(50, 430,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, 350,0), new Point(-50, 480,0), new Point(50, 430,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, 350,0), new Point(50, 300,0), new Point(50, 430,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, 350,0), new Point(50, 300,0), new Point(-50, 220,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(50, 130,0), new Point(50, 300,0), new Point(-50, 220,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(50, 130,0), new Point(-50,90,0), new Point(-50, 220,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
 
                 new Triangle(new Point(50, 130,0), new Point(-50,90,0), new Point(50,0,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, -50,0), new Point(-50,90,0), new Point(50,0,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, -50,0), new Point(50,-130,0), new Point(50,0,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(-50, -50,0), new Point(50,-130,0), new Point(-50,-180,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(50, -260,0), new Point(50,-130,0), new Point(-50,-180,0))
                         .setEmission(new Color(blue)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(50, -260,0), new Point(-50,-310,0), new Point(-50,-180,0))
-                        .setEmission(new Color(pink)) //
+                        .setEmission(new Color(170, 51, 106)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
                 new Triangle(new Point(50, -260,0), new Point(-50,-310,0), new Point(50,-390,0))
                         .setEmission(new Color(blue)) //
+                        .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
+
+                // picture on the wall
+                new Triangle(new Point(265, -50,100), new Point(265,-200,100), new Point(320,-125,100))
+                        .setEmission(new Color(blue)) //
+                        .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)), //
+                new Triangle(new Point(265, -50,100), new Point(265,-200,100), new Point(210,-125,100))
+                        .setEmission(new Color(green)) //
                         .setMaterial(new Material().setShininess(200).setKt(1).setKr(0.9).setKd(0.5).setKs(0.4)) //
 
-                // wall in background
-//                new Triangle(new Point(-50, -310,-1000), new Point(-50,610,-1000), new Point(1000,610,-1000))
-//                        .setEmission(new Color(white)) //
-//                        .setMaterial(new Material().setShininess(0).setKt(0).setKr(0).setKd(0).setKs(0)) //
+
         );
 
-//        scene.getLights().add(new SpotLight(new Color(400, 300, 200), new Point(250, -200, -50), new Vector(175, 25, -75)) //
-//                .setKl(0.00001).setKq(0.000005));
-//        scene.getLights().add(new PointLight(new Color(WHITE), new Point(-800, -5000, -1000)) // 800,600,1000
-//                .setKl(0.00001).setKq(0.000005));
-//        scene.getLights().add(new SpotLight(new Color(WHITE), new Point(-500, -450, -1000), new Vector(-1,0,-1))
-//                .setKl(0.1).setKq(0.05));
-//        scene.getLights().add(new DirectionalLight(new Color(white),new Vector(1,0,-1)));
+        scene.getLights().add(new SpotLight(new Color(400, 300, 200), new Point(250, -200, -50), new Vector(175, 25, -75)) //
+                .setKl(0.00001).setKq(0.000005));
+        scene.getLights().add(new PointLight(new Color(WHITE), new Point(-800, -5000, -1000)) // 800,600,1000
+                .setKl(0.00001).setKq(0.000005));
+        scene.getLights().add(new SpotLight(new Color(WHITE), new Point(-500, -450, -1000), new Vector(-1,0,-1))
+                .setKl(0.1).setKq(0.05));
+        scene.getLights().add(new DirectionalLight(new Color(white),new Vector(1,0,-1)));
 
         ImageWriter imageWriter = new ImageWriter("desk", 600, 600);
         camera.setImageWriter(imageWriter) //

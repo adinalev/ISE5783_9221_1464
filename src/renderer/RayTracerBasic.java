@@ -284,7 +284,6 @@ public class RayTracerBasic extends RayTracerBase {
         Color color = Color.BLACK;
         Vector n = gp.geometry.getNormal(gp.point);
         Material material = gp.geometry.getMaterial();
-        //Double3 kr = gp.geometry.getMaterial().kR;
         Double3 kkr = k.product(material.kR);
         Double3 kkt = k.product(material.kT);
 
@@ -295,17 +294,6 @@ public class RayTracerBasic extends RayTracerBase {
         if (!(kkt.lowerThan(MIN_CALC_COLOR_K))) {
             color = color.add(calcGlobalEffects(constructRefractedRay(gp.point,ray,n), level, material.kT, kkt));
         }
-//        if (!(kkr.lowerThan(MIN_CALC_COLOR_K))) {
-//            List<Ray> beam = shootBeam(constructReflectedRay(ray, gp.point, n));
-//            Color beamColor = beamCalcColor(beam);
-//            color = color.add(beamColor);
-//        }
-//
-//        if (!(kkt.lowerThan(MIN_CALC_COLOR_K))) {
-//            List<Ray> beam = shootBeam(constructRefractedRay(gp.point, ray, n));
-//            Color beamColor = beamCalcColor(beam);
-//            color = color.add(beamColor);
-//        }
         return color;
     }
 
@@ -421,8 +409,6 @@ public class RayTracerBasic extends RayTracerBase {
                 beam.add(shootRay);
             }
         }
-        // add corner points
-
         return beam;
     }
 
@@ -432,15 +418,12 @@ public class RayTracerBasic extends RayTracerBase {
      * @return the average of all the colors sent in
      */
     private Color beamCalcColor(List<Ray> beam) {
-        //Color color;
         Color result = Color.BLACK;
 
         //Color result = this.scene.getAmbientLight().getIntensity();
 
         // calculate the color of each ray and add them all together
         for (int i = 0; i < beam.size(); i++) {
-            //color = traceRay(beam.get(i));
-            //result = result.add(color);
             GeoPoint gp = findClosestIntersection(beam.get(i));
 
             //if it does not hit anything added the background
